@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ApiResponse, PaginatedResponse } from '@/types';
+import { ApiResponse } from '@/types';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api';
 
@@ -42,47 +42,50 @@ api.interceptors.response.use(
 
 // Generic API methods
 export const apiCall = {
-  get: async <T>(url: string, params?: any): Promise<ApiResponse<T>> => {
+  get: async <T>(url: string, params?: Record<string, unknown>): Promise<ApiResponse<T>> => {
     try {
       const response = await api.get(url, { params });
       return {
         success: true,
         data: response.data,
       };
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { message?: string } }; message?: string };
       return {
         success: false,
-        error: error.response?.data?.message || error.message,
+        error: axiosError.response?.data?.message || axiosError.message || 'An error occurred',
       };
     }
   },
 
-  post: async <T>(url: string, data?: any): Promise<ApiResponse<T>> => {
+  post: async <T>(url: string, data?: unknown): Promise<ApiResponse<T>> => {
     try {
       const response = await api.post(url, data);
       return {
         success: true,
         data: response.data,
       };
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { message?: string } }; message?: string };
       return {
         success: false,
-        error: error.response?.data?.message || error.message,
+        error: axiosError.response?.data?.message || axiosError.message || 'An error occurred',
       };
     }
   },
 
-  put: async <T>(url: string, data?: any): Promise<ApiResponse<T>> => {
+  put: async <T>(url: string, data?: unknown): Promise<ApiResponse<T>> => {
     try {
       const response = await api.put(url, data);
       return {
         success: true,
         data: response.data,
       };
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { message?: string } }; message?: string };
       return {
         success: false,
-        error: error.response?.data?.message || error.message,
+        error: axiosError.response?.data?.message || axiosError.message || 'An error occurred',
       };
     }
   },
@@ -94,10 +97,11 @@ export const apiCall = {
         success: true,
         data: response.data,
       };
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { message?: string } }; message?: string };
       return {
         success: false,
-        error: error.response?.data?.message || error.message,
+        error: axiosError.response?.data?.message || axiosError.message || 'An error occurred',
       };
     }
   },

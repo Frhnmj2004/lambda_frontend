@@ -120,6 +120,7 @@ export interface User {
 }
 
 export interface MarketplaceFilters {
+  [key: string]: unknown;
   vramMin?: number;
   vramMax?: number;
   priceMin?: number;

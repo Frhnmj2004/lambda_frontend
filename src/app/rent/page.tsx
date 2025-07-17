@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { ArrowRight, Upload, AlertCircle, CheckCircle } from "lucide-react";
+import { ArrowRight, AlertCircle } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -52,7 +52,7 @@ export default function RentPage() {
     },
   });
 
-  const { register, handleSubmit, formState: { errors }, setValue, watch } = form;
+  const { register, handleSubmit, formState: { errors }, setValue } = form;
 
   // Calculate estimated cost based on requirements
   const calculateEstimatedCost = () => {
@@ -81,7 +81,7 @@ export default function RentPage() {
     setValue("maxBudget", value[0]);
   };
 
-  const onSubmit = async (data: JobFormData) => {
+  const onSubmit = async () => {
     setIsSubmitting(true);
     
     try {

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Cpu, MapPin, Clock, Star, ArrowRight } from "lucide-react";
+import { Cpu, MapPin, Star, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { GPUNode } from "@/types";
 import { cn, formatPrice, formatGPUSpecs, getStatusColor } from "@/lib/utils";

@@ -37,7 +37,7 @@ export const providerAPI = {
   },
 
   // Send heartbeat (node is still online)
-  heartbeat: async (nodeId: string, systemStats?: any) => {
+  heartbeat: async (nodeId: string, systemStats?: Record<string, unknown>) => {
     const response = await apiCall.post(`/provider/heartbeat`, {
       nodeId,
       timestamp: new Date().toISOString(),

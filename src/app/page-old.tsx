@@ -59,7 +59,7 @@ export default function HomePage() {
             </h1>
             
             <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto">
-              Access powerful GPU computing or monetize your hardware on the world's 
+              Access powerful GPU computing or monetize your hardware on the world&apos;s 
               first fully decentralized GPU marketplace.
             </p>
 
