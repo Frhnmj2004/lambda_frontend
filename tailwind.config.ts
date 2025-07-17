@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  darkMode: ["class"],
+  darkMode: "class",
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -51,17 +51,30 @@ const config: Config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        // Lambda BNB theme colors
-        bnb: {
-          yellow: "#F0B90B",
-          gold: "#FFD700",
-          black: "#0B0B0B",
+        // New Academy Design Colors
+        academy: {
+          yellow: "#FFD600",
+          'yellow-light': "#FFF2A0",
+          red: "#FF3B30",
+          'red-light': "#FFE8E6",
+          black: "#1A1A1A",
+          'gray-light': "#F8F8F8",
+          white: "#FFFFFF",
         },
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      fontFamily: {
+        'sans': ['Plus Jakarta Sans', 'Manrope', 'system-ui', 'sans-serif'],
+        'heading': ['Plus Jakarta Sans', 'Manrope', 'system-ui', 'sans-serif'],
+      },
+      fontSize: {
+        'hero': ['4rem', { lineHeight: '0.9', letterSpacing: '-0.02em' }],
+        'display': ['3rem', { lineHeight: '1', letterSpacing: '-0.02em' }],
+        'headline': ['2rem', { lineHeight: '1.1', letterSpacing: '-0.01em' }],
       },
       keyframes: {
         "accordion-down": {
@@ -72,24 +85,20 @@ const config: Config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
-        "gpu-spin": {
-          "0%": { transform: "rotateY(0deg)" },
-          "100%": { transform: "rotateY(360deg)" },
+        "slide-in": {
+          "0%": { transform: "translateY(20px)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
         },
-        "glow": {
-          "0%, 100%": { 
-            boxShadow: "0 0 5px #F0B90B, 0 0 10px #F0B90B, 0 0 15px #F0B90B" 
-          },
-          "50%": { 
-            boxShadow: "0 0 10px #F0B90B, 0 0 20px #F0B90B, 0 0 30px #F0B90B" 
-          },
+        "fade-in": {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "gpu-spin": "gpu-spin 3s linear infinite",
-        "glow": "glow 2s ease-in-out infinite",
+        "slide-in": "slide-in 0.6s ease-out",
+        "fade-in": "fade-in 0.4s ease-out",
       },
     },
   },

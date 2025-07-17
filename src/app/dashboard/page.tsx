@@ -2,12 +2,6 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
-import { JobCard } from "@/components/shared/job-card";
-import { GpuCard } from "@/components/shared/gpu-card";
 import { 
   Activity,
   Cpu,
@@ -20,611 +14,531 @@ import {
   BarChart3,
   Wallet,
   Settings,
-  Plus
+  Plus,
+  ArrowRight,
+  CheckCircle,
+  AlertCircle,
+  Play,
+  Pause,
+  Square
 } from "lucide-react";
-
-const mockJobs = [
-  {
-    id: "job-1",
-    name: "AI Model Training",
-    description: "Training a neural network for image classification",
-    status: "running" as const,
-    dockerImage: "tensorflow/tensorflow:latest-gpu",
-    requirements: {
-      minVRAM: 16,
-      maxDuration: 4,
-      estimatedDuration: 3,
-      gpuModel: "RTX 4090",
-      region: "US-East"
-    },
-    pricing: {
-      maxBudget: 50.0,
-      actualCost: 12.50,
-      currency: "USD"
-    },
-    timestamps: {
-      created: new Date("2024-01-15T10:00:00Z"),
-      started: new Date("2024-01-15T10:05:00Z"),
-      lastUpdate: new Date("2024-01-15T12:35:00Z")
-    },
-    progress: {
-      percentage: 65,
-      stage: "Training epoch 65/100",
-      logs: ["Starting training...", "Epoch 1 completed", "Epoch 65 completed"]
-    },
-    user: {
-      id: "user-1",
-      walletAddress: "0x1234567890123456789012345678901234567890"
-    }
-  },
-  {
-    id: "job-2",
-    name: "3D Rendering",
-    description: "Rendering architectural visualization",
-    status: "completed" as const,
-    dockerImage: "blender:latest",
-    requirements: {
-      minVRAM: 12,
-      maxDuration: 2,
-      estimatedDuration: 1.25,
-      gpuModel: "RTX 3080",
-      region: "EU-West"
-    },
-    pricing: {
-      maxBudget: 20.0,
-      actualCost: 8.75,
-      currency: "USD"
-    },
-    timestamps: {
-      created: new Date("2024-01-14T14:00:00Z"),
-      started: new Date("2024-01-14T14:02:00Z"),
-      completed: new Date("2024-01-14T15:17:00Z"),
-      lastUpdate: new Date("2024-01-14T15:17:00Z")
-    },
-    progress: {
-      percentage: 100,
-      stage: "Completed",
-      logs: ["Rendering started", "Frame 1000/1000 completed", "Render finished"]
-    },
-    user: {
-      id: "user-1",
-      walletAddress: "0x1234567890123456789012345678901234567890"
-    }
-  },
-  {
-    id: "job-3",
-    name: "Video Processing",
-    description: "Converting and optimizing video files",
-    status: "pending" as const,
-    dockerImage: "ffmpeg:latest",
-    requirements: {
-      minVRAM: 14,
-      maxDuration: 3,
-      estimatedDuration: 2,
-      gpuModel: "RTX 4080",
-      region: "US-West"
-    },
-    pricing: {
-      maxBudget: 30.0,
-      currency: "USD"
-    },
-    timestamps: {
-      created: new Date("2024-01-15T16:00:00Z"),
-      lastUpdate: new Date("2024-01-15T16:00:00Z")
-    },
-    user: {
-      id: "user-1",
-      walletAddress: "0x1234567890123456789012345678901234567890"
-    }
-  }
-];
-
-const mockGpuNodes = [
-  {
-    id: "gpu-1",
-    name: "Gaming Beast",
-    specs: {
-      model: "RTX 4090",
-      vram: 24,
-      cores: 16384,
-      memory: 32,
-      storage: 1000
-    },
-    location: {
-      country: "United States",
-      city: "New York",
-      region: "us-east-1"
-    },
-    performance: {
-      uptime: 99.8,
-      avgResponseTime: 120,
-      completedJobs: 247,
-      rating: 4.9
-    },
-    pricing: {
-      pricePerHour: 0.85,
-      currency: "USD"
-    },
-    status: "online" as const,
-    provider: {
-      id: "provider-1",
-      name: "TechMiner",
-      walletAddress: "0x1234567890123456789012345678901234567890",
-      reputation: 4.9
-    },
-    availability: {
-      maxDuration: 24,
-      minDuration: 1
-    }
-  },
-  {
-    id: "gpu-2",
-    name: "Render Farm Node",
-    specs: {
-      model: "RTX 3080",
-      vram: 10,
-      cores: 8704,
-      memory: 16,
-      storage: 500
-    },
-    location: {
-      country: "Germany",
-      city: "Frankfurt",
-      region: "eu-west-1"
-    },
-    performance: {
-      uptime: 97.5,
-      avgResponseTime: 180,
-      completedJobs: 189,
-      rating: 4.7
-    },
-    pricing: {
-      pricePerHour: 0.45,
-      currency: "USD"
-    },
-    status: "online" as const,
-    provider: {
-      id: "provider-2",
-      name: "EuroCompute",
-      walletAddress: "0x0987654321098765432109876543210987654321",
-      reputation: 4.7
-    },
-    availability: {
-      maxDuration: 12,
-      minDuration: 1
-    }
-  }
-];
+import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
 export default function DashboardPage() {
-  const [userType, setUserType] = useState<'renter' | 'provider'>('renter');
-  const [activeTab, setActiveTab] = useState<'overview' | 'jobs' | 'nodes' | 'earnings'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'renter' | 'provider'>('overview');
+  const [isProviding, setIsProviding] = useState(true);
 
   const stats = {
-    renter: {
-      activeJobs: 2,
-      totalSpent: 245.80,
-      completedJobs: 15,
-      avgJobTime: "2h 15m"
+    totalEarnings: 2847.50,
+    activeJobs: 3,
+    totalJobs: 127,
+    uptime: 99.2,
+    gpuUtilization: 87,
+    avgHourlyRate: 1.25
+  };
+
+  const recentJobs = [
+    {
+      id: "job-1",
+      name: "AI Model Training",
+      status: "running",
+      runtime: "2h 34m",
+      earnings: 12.50,
+      gpu: "RTX 4090",
+      client: "DeepMind Research"
     },
-    provider: {
-      activeNodes: 3,
-      totalEarned: 1247.50,
+    {
+      id: "job-2", 
+      name: "Video Rendering",
+      status: "completed",
+      runtime: "45m",
+      earnings: 8.75,
+      gpu: "RTX 4080",
+      client: "Creative Studio"
+    },
+    {
+      id: "job-3",
+      name: "Cryptocurrency Mining",
+      status: "queued",
+      runtime: "-",
+      earnings: 0,
+      gpu: "RTX 4070",
+      client: "Crypto Corp"
+    },
+    {
+      id: "job-4",
+      name: "3D Model Processing",
+      status: "completed",
+      runtime: "1h 23m",
+      earnings: 15.25,
+      gpu: "RTX 4090",
+      client: "Arch Viz Studio"
+    }
+  ];
+
+  const providerNodes = [
+    {
+      id: "gpu-1",
+      model: "RTX 4090",
+      vram: "24GB",
+      status: "active",
       utilization: 87,
-      avgHourlyRate: 0.65
+      earnings: 45.30,
+      uptime: "12d 5h"
+    },
+    {
+      id: "gpu-2",
+      model: "RTX 4080",
+      vram: "16GB", 
+      status: "idle",
+      utilization: 0,
+      earnings: 23.80,
+      uptime: "8d 12h"
+    }
+  ];
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'running':
+      case 'active':
+        return 'text-green-600';
+      case 'completed':
+        return 'text-blue-600';
+      case 'queued':
+      case 'idle':
+        return 'text-gray-600';
+      case 'failed':
+        return 'text-red-600';
+      default:
+        return 'text-gray-600';
+    }
+  };
+
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case 'running':
+      case 'active':
+        return <Play className="w-4 h-4" />;
+      case 'completed':
+        return <CheckCircle className="w-4 h-4" />;
+      case 'queued':
+      case 'idle':
+        return <Pause className="w-4 h-4" />;
+      case 'failed':
+        return <AlertCircle className="w-4 h-4" />;
+      default:
+        return <Square className="w-4 h-4" />;
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black p-4 pt-24">
-      <div className="max-w-7xl mx-auto space-y-8">
-        {/* Header Section */}
+    <div className="min-h-screen bg-white pt-8">
+      <div className="container mx-auto px-6 lg:px-8">
+        {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6"
+          transition={{ duration: 0.8 }}
+          className="mb-12"
         >
-          <div>
-            <h1 className="text-3xl lg:text-4xl font-bold text-gradient mb-2">
-              Dashboard
-            </h1>
-            <p className="text-gray-400 text-lg">
-              {userType === 'renter' ? 'Manage your compute jobs and track spending' : 'Monitor your GPU nodes and earnings'}
-            </p>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <div className="flex items-center space-x-3 bg-gray-900 p-2 rounded-lg border border-gray-700">
-              <Label htmlFor="user-type" className="text-sm text-gray-300">Renter</Label>
-              <Switch
-                id="user-type"
-                checked={userType === 'provider'}
-                onCheckedChange={(checked) => setUserType(checked ? 'provider' : 'renter')}
-                className="data-[state=checked]:bg-bnb-yellow"
-              />
-              <Label htmlFor="user-type" className="text-sm text-gray-300">Provider</Label>
+          <div className="flex justify-between items-start mb-8">
+            <div>
+              <h1 className="academy-section-heading mb-4">
+                DASHBOARD
+              </h1>
+              <p className="text-xl text-gray-600">
+                Monitor your GPU rental activity and manage your compute resources
+              </p>
             </div>
-            <Button className="bnb-gradient text-black font-semibold hover:opacity-90">
-              <Wallet className="w-4 h-4 mr-2" />
-              Connect Wallet
-            </Button>
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
+                <Label htmlFor="provider-mode" className="text-sm font-medium text-academy-black">
+                  PROVIDER MODE
+                </Label>
+                <Switch
+                  id="provider-mode"
+                  checked={isProviding}
+                  onCheckedChange={setIsProviding}
+                />
+              </div>
+              <Button className="bg-academy-yellow text-academy-black hover:bg-yellow-500 font-semibold rounded-none">
+                <Plus className="w-4 h-4 mr-2" />
+                New Job
+              </Button>
+            </div>
+          </div>
+
+          {/* Tab Navigation */}
+          <div className="flex border-b border-gray-200">
+            {[
+              { id: 'overview', label: 'Overview' },
+              { id: 'renter', label: 'As Renter' },
+              { id: 'provider', label: 'As Provider' }
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id as 'overview' | 'renter' | 'provider')}
+                className={`px-6 py-3 font-semibold text-sm uppercase tracking-wider border-b-2 transition-all duration-200 ${
+                  activeTab === tab.id
+                    ? 'border-academy-yellow text-academy-black'
+                    : 'border-transparent text-gray-600 hover:text-academy-black hover:border-gray-300'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
           </div>
         </motion.div>
 
-        {/* Stats Grid */}
+        {/* Overview Tab */}
+        {activeTab === 'overview' && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="space-y-12"
+          >
+            {/* Stats Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="bg-academy-yellow p-6 border border-gray-200">
+                <div className="flex items-center justify-between mb-4">
+                  <DollarSign className="w-8 h-8 text-academy-black" />
+                  <span className="text-2xl font-bold text-academy-black">
+                    ${stats.totalEarnings.toFixed(2)}
+                  </span>
+                </div>
+                <h3 className="font-semibold text-academy-black uppercase text-sm tracking-wider">
+                  Total Earnings
+                </h3>
+              </div>
+
+              <div className="bg-white p-6 border border-gray-200">
+                <div className="flex items-center justify-between mb-4">
+                  <Activity className="w-8 h-8 text-gray-600" />
+                  <span className="text-2xl font-bold text-academy-black">
+                    {stats.activeJobs}
+                  </span>
+                </div>
+                <h3 className="font-semibold text-gray-600 uppercase text-sm tracking-wider">
+                  Active Jobs
+                </h3>
+              </div>
+
+              <div className="bg-white p-6 border border-gray-200">
+                <div className="flex items-center justify-between mb-4">
+                  <BarChart3 className="w-8 h-8 text-gray-600" />
+                  <span className="text-2xl font-bold text-academy-black">
+                    {stats.totalJobs}
+                  </span>
+                </div>
+                <h3 className="font-semibold text-gray-600 uppercase text-sm tracking-wider">
+                  Total Jobs
+                </h3>
+              </div>
+
+              <div className="bg-white p-6 border border-gray-200">
+                <div className="flex items-center justify-between mb-4">
+                  <Server className="w-8 h-8 text-gray-600" />
+                  <span className="text-2xl font-bold text-academy-black">
+                    {stats.uptime}%
+                  </span>
+                </div>
+                <h3 className="font-semibold text-gray-600 uppercase text-sm tracking-wider">
+                  Uptime
+                </h3>
+              </div>
+
+              <div className="bg-white p-6 border border-gray-200">
+                <div className="flex items-center justify-between mb-4">
+                  <Cpu className="w-8 h-8 text-gray-600" />
+                  <span className="text-2xl font-bold text-academy-black">
+                    {stats.gpuUtilization}%
+                  </span>
+                </div>
+                <h3 className="font-semibold text-gray-600 uppercase text-sm tracking-wider">
+                  GPU Utilization
+                </h3>
+              </div>
+
+              <div className="bg-white p-6 border border-gray-200">
+                <div className="flex items-center justify-between mb-4">
+                  <TrendingUp className="w-8 h-8 text-gray-600" />
+                  <span className="text-2xl font-bold text-academy-black">
+                    ${stats.avgHourlyRate}
+                  </span>
+                </div>
+                <h3 className="font-semibold text-gray-600 uppercase text-sm tracking-wider">
+                  Avg Hourly Rate
+                </h3>
+              </div>
+            </div>
+
+            {/* Recent Activity */}
+            <div>
+              <h2 className="text-2xl font-bold text-academy-black mb-6 uppercase tracking-tight">
+                Recent Activity
+              </h2>
+              <div className="bg-white border border-gray-200">
+                <div className="grid grid-cols-6 gap-4 p-4 border-b border-gray-200 text-sm font-semibold text-gray-600 uppercase tracking-wider">
+                  <div>Job Name</div>
+                  <div>Status</div>
+                  <div>Runtime</div>
+                  <div>Earnings</div>
+                  <div>GPU</div>
+                  <div>Client</div>
+                </div>
+                {recentJobs.map((job) => (
+                  <div
+                    key={job.id}
+                    className="grid grid-cols-6 gap-4 p-4 border-b border-gray-100 hover:bg-gray-50 transition-colors items-center academy-list-item"
+                  >
+                    <div className="font-medium text-academy-black">{job.name}</div>
+                    <div className={`flex items-center gap-2 ${getStatusColor(job.status)}`}>
+                      {getStatusIcon(job.status)}
+                      <span className="capitalize font-medium">{job.status}</span>
+                    </div>
+                    <div className="text-gray-600">{job.runtime}</div>
+                    <div className="font-semibold text-academy-black">
+                      {job.earnings > 0 ? `$${job.earnings.toFixed(2)}` : '-'}
+                    </div>
+                    <div className="text-gray-600">{job.gpu}</div>
+                    <div className="text-gray-600">{job.client}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Renter Tab */}
+        {activeTab === 'renter' && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="space-y-12"
+          >
+            <div className="flex justify-between items-center">
+              <h2 className="text-2xl font-bold text-academy-black uppercase tracking-tight">
+                Your Jobs
+              </h2>
+              <Button className="bg-academy-yellow text-academy-black hover:bg-yellow-500 font-semibold rounded-none">
+                <Plus className="w-4 h-4 mr-2" />
+                Submit New Job
+              </Button>
+            </div>
+
+            <div className="bg-white border border-gray-200">
+              <div className="grid grid-cols-7 gap-4 p-4 border-b border-gray-200 text-sm font-semibold text-gray-600 uppercase tracking-wider">
+                <div>Job Name</div>
+                <div>Status</div>
+                <div>Progress</div>
+                <div>Runtime</div>
+                <div>Cost</div>
+                <div>GPU</div>
+                <div>Actions</div>
+              </div>
+              {recentJobs.filter(job => ['running', 'queued', 'completed'].includes(job.status)).map((job) => (
+                <div
+                  key={job.id}
+                  className="grid grid-cols-7 gap-4 p-4 border-b border-gray-100 hover:bg-gray-50 transition-colors items-center academy-list-item"
+                >
+                  <div className="font-medium text-academy-black">{job.name}</div>
+                  <div className={`flex items-center gap-2 ${getStatusColor(job.status)}`}>
+                    {getStatusIcon(job.status)}
+                    <span className="capitalize font-medium">{job.status}</span>
+                  </div>
+                  <div className="w-full bg-gray-200 h-2">
+                    <div 
+                      className="bg-academy-yellow h-2 transition-all duration-300" 
+                      style={{ width: job.status === 'completed' ? '100%' : job.status === 'running' ? '65%' : '0%' }}
+                    ></div>
+                  </div>
+                  <div className="text-gray-600">{job.runtime}</div>
+                  <div className="font-semibold text-academy-black">
+                    ${job.earnings.toFixed(2)}
+                  </div>
+                  <div className="text-gray-600">{job.gpu}</div>
+                  <div className="flex gap-2">
+                    <Button variant="outline" size="sm" className="border-academy-black text-academy-black hover:bg-academy-black hover:text-white rounded-none">
+                      View
+                    </Button>
+                    {job.status === 'running' && (
+                      <Button variant="outline" size="sm" className="border-red-600 text-red-600 hover:bg-red-600 hover:text-white rounded-none">
+                        Stop
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+
+        {/* Provider Tab */}
+        {activeTab === 'provider' && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="space-y-12"
+          >
+            <div className="flex justify-between items-center">
+              <h2 className="text-2xl font-bold text-academy-black uppercase tracking-tight">
+                Your GPU Nodes
+              </h2>
+              <Button className="bg-academy-yellow text-academy-black hover:bg-yellow-500 font-semibold rounded-none">
+                <Plus className="w-4 h-4 mr-2" />
+                Add GPU Node
+              </Button>
+            </div>
+
+            <div className="bg-white border border-gray-200">
+              <div className="grid grid-cols-6 gap-4 p-4 border-b border-gray-200 text-sm font-semibold text-gray-600 uppercase tracking-wider">
+                <div>GPU Model</div>
+                <div>Status</div>
+                <div>Utilization</div>
+                <div>Earnings</div>
+                <div>Uptime</div>
+                <div>Actions</div>
+              </div>
+              {providerNodes.map((node) => (
+                <div
+                  key={node.id}
+                  className="grid grid-cols-6 gap-4 p-4 border-b border-gray-100 hover:bg-gray-50 transition-colors items-center academy-list-item"
+                >
+                  <div className="font-medium text-academy-black">
+                    {node.model}
+                    <div className="text-sm text-gray-600">{node.vram}</div>
+                  </div>
+                  <div className={`flex items-center gap-2 ${getStatusColor(node.status)}`}>
+                    {getStatusIcon(node.status)}
+                    <span className="capitalize font-medium">{node.status}</span>
+                  </div>
+                  <div className="w-full bg-gray-200 h-2">
+                    <div 
+                      className="bg-academy-yellow h-2 transition-all duration-300" 
+                      style={{ width: `${node.utilization}%` }}
+                    ></div>
+                    <div className="text-sm text-gray-600 mt-1">{node.utilization}%</div>
+                  </div>
+                  <div className="font-semibold text-academy-black">
+                    ${node.earnings.toFixed(2)}
+                  </div>
+                  <div className="text-gray-600">{node.uptime}</div>
+                  <div className="flex gap-2">
+                    <Button variant="outline" size="sm" className="border-academy-black text-academy-black hover:bg-academy-black hover:text-white rounded-none">
+                      Configure
+                    </Button>
+                    <Button variant="outline" size="sm" className="border-red-600 text-red-600 hover:bg-red-600 hover:text-white rounded-none">
+                      {node.status === 'active' ? 'Stop' : 'Start'}
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Provider Stats */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-academy-yellow p-6 border border-gray-200">
+                <div className="flex items-center justify-between mb-4">
+                  <Wallet className="w-8 h-8 text-academy-black" />
+                  <span className="text-2xl font-bold text-academy-black">
+                    $69.10
+                  </span>
+                </div>
+                <h3 className="font-semibold text-academy-black uppercase text-sm tracking-wider">
+                  Today&apos;s Earnings
+                </h3>
+              </div>
+
+              <div className="bg-white p-6 border border-gray-200">
+                <div className="flex items-center justify-between mb-4">
+                  <Clock className="w-8 h-8 text-gray-600" />
+                  <span className="text-2xl font-bold text-academy-black">
+                    87%
+                  </span>
+                </div>
+                <h3 className="font-semibold text-gray-600 uppercase text-sm tracking-wider">
+                  Avg Utilization
+                </h3>
+              </div>
+
+              <div className="bg-white p-6 border border-gray-200">
+                <div className="flex items-center justify-between mb-4">
+                  <Users className="w-8 h-8 text-gray-600" />
+                  <span className="text-2xl font-bold text-academy-black">
+                    24
+                  </span>
+                </div>
+                <h3 className="font-semibold text-gray-600 uppercase text-sm tracking-wider">
+                  Unique Clients
+                </h3>
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Quick Actions */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="pt-16 border-t border-gray-200"
         >
-          {userType === 'renter' ? (
-            <>
-              <Card className="card-dark border-gray-700 gpu-glow">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium text-gray-300">Active Jobs</CardTitle>
-                  <Activity className="h-4 w-4 text-bnb-yellow" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold text-white">{stats.renter.activeJobs}</div>
-                  <p className="text-xs text-gray-400">2 running, 0 queued</p>
-                </CardContent>
-              </Card>
-
-              <Card className="card-dark border-gray-700 gpu-glow">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium text-gray-300">Total Spent</CardTitle>
-                  <DollarSign className="h-4 w-4 text-bnb-yellow" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold text-white">${stats.renter.totalSpent}</div>
-                  <p className="text-xs text-gray-400">+$12.50 today</p>
-                </CardContent>
-              </Card>
-
-              <Card className="card-dark border-gray-700 gpu-glow">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium text-gray-300">Completed Jobs</CardTitle>
-                  <TrendingUp className="h-4 w-4 text-bnb-yellow" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold text-white">{stats.renter.completedJobs}</div>
-                  <p className="text-xs text-gray-400">95% success rate</p>
-                </CardContent>
-              </Card>
-
-              <Card className="card-dark border-gray-700 gpu-glow">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium text-gray-300">Avg Job Time</CardTitle>
-                  <Clock className="h-4 w-4 text-bnb-yellow" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold text-white">{stats.renter.avgJobTime}</div>
-                  <p className="text-xs text-gray-400">-15% vs last month</p>
-                </CardContent>
-              </Card>
-            </>
-          ) : (
-            <>
-              <Card className="card-dark border-gray-700 gpu-glow">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium text-gray-300">Active Nodes</CardTitle>
-                  <Server className="h-4 w-4 text-bnb-yellow" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold text-white">{stats.provider.activeNodes}</div>
-                  <p className="text-xs text-gray-400">All nodes online</p>
-                </CardContent>
-              </Card>
-
-              <Card className="card-dark border-gray-700 gpu-glow">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium text-gray-300">Total Earned</CardTitle>
-                  <DollarSign className="h-4 w-4 text-bnb-yellow" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold text-white">${stats.provider.totalEarned}</div>
-                  <p className="text-xs text-gray-400">+$45.20 today</p>
-                </CardContent>
-              </Card>
-
-              <Card className="card-dark border-gray-700 gpu-glow">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium text-gray-300">Utilization</CardTitle>
-                  <BarChart3 className="h-4 w-4 text-bnb-yellow" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold text-white">{stats.provider.utilization}%</div>
-                  <p className="text-xs text-gray-400">Above target</p>
-                </CardContent>
-              </Card>
-
-              <Card className="card-dark border-gray-700 gpu-glow">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium text-gray-300">Hourly Rate</CardTitle>
-                  <Zap className="h-4 w-4 text-bnb-yellow" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold text-white">${stats.provider.avgHourlyRate}</div>
-                  <p className="text-xs text-gray-400">Competitive rate</p>
-                </CardContent>
-              </Card>
-            </>
-          )}
-        </motion.div>
-
-        {/* Navigation Tabs */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="flex flex-wrap gap-2 bg-gray-900 p-2 rounded-lg border border-gray-700"
-        >
-          {(userType === 'renter' ? 
-            [
-              { id: 'overview', label: 'Overview' },
-              { id: 'jobs', label: 'My Jobs' }
-            ] : 
-            [
-              { id: 'overview', label: 'Overview' },
-              { id: 'nodes', label: 'My Nodes' },
-              { id: 'earnings', label: 'Earnings' }
-            ]
-          ).map((tab) => (
+          <h2 className="text-2xl font-bold text-academy-black mb-8 uppercase tracking-tight">
+            Quick Actions
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <Button
-              key={tab.id}
-              variant={activeTab === tab.id ? "default" : "ghost"}
-              className={`${
-                activeTab === tab.id 
-                  ? 'bnb-gradient text-black' 
-                  : 'text-gray-300 hover:text-white hover:bg-gray-800'
-              }`}
-              onClick={() => setActiveTab(tab.id as any)}
+              asChild
+              className="bg-academy-black text-white hover:bg-gray-800 font-semibold h-auto p-6 rounded-none flex-col"
             >
-              {tab.label}
+              <a href="/rent" className="flex flex-col items-center gap-2">
+                <Plus className="w-8 h-8" />
+                <span>Submit Job</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
             </Button>
-          ))}
-        </motion.div>
-
-        {/* Main Content */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="space-y-8"
-        >
-          {userType === 'renter' ? (
-            <>
-              {activeTab === 'overview' && (
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                  <Card className="card-dark border-gray-700">
-                    <CardHeader>
-                      <div className="flex items-center justify-between">
-                        <CardTitle className="text-gradient">Recent Jobs</CardTitle>
-                        <Button variant="outline" size="sm" className="border-bnb-yellow text-bnb-yellow hover:bg-bnb-yellow hover:text-black">
-                          <Plus className="w-4 h-4 mr-2" />
-                          New Job
-                        </Button>
-                      </div>
-                      <CardDescription>Your latest compute jobs</CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      {mockJobs.slice(0, 3).map((job, index) => (
-                        <JobCard key={job.id} job={job} />
-                      ))}
-                    </CardContent>
-                  </Card>
-
-                  <Card className="card-dark border-gray-700">
-                    <CardHeader>
-                      <CardTitle className="text-gradient">Quick Stats</CardTitle>
-                      <CardDescription>Performance overview</CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-6">
-                      <div className="space-y-4">
-                        <div className="flex justify-between items-center">
-                          <span className="text-gray-300">Success Rate</span>
-                          <span className="text-white font-semibold">95%</span>
-                        </div>
-                        <div className="w-full bg-gray-700 rounded-full h-2">
-                          <div className="bg-bnb-yellow h-2 rounded-full" style={{ width: '95%' }}></div>
-                        </div>
-                      </div>
-                      <div className="space-y-4">
-                        <div className="flex justify-between items-center">
-                          <span className="text-gray-300">Cost Efficiency</span>
-                          <span className="text-white font-semibold">87%</span>
-                        </div>
-                        <div className="w-full bg-gray-700 rounded-full h-2">
-                          <div className="bg-bnb-yellow h-2 rounded-full" style={{ width: '87%' }}></div>
-                        </div>
-                      </div>
-                      <div className="space-y-4">
-                        <div className="flex justify-between items-center">
-                          <span className="text-gray-300">Average Speed</span>
-                          <span className="text-white font-semibold">92%</span>
-                        </div>
-                        <div className="w-full bg-gray-700 rounded-full h-2">
-                          <div className="bg-bnb-yellow h-2 rounded-full" style={{ width: '92%' }}></div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
-              )}
-
-              {activeTab === 'jobs' && (
-                <Card className="card-dark border-gray-700">
-                  <CardHeader>
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <CardTitle className="text-gradient">All Jobs</CardTitle>
-                        <CardDescription>Manage and monitor your compute jobs</CardDescription>
-                      </div>
-                      <Button className="bnb-gradient text-black font-semibold hover:opacity-90">
-                        <Plus className="w-4 h-4 mr-2" />
-                        Submit New Job
-                      </Button>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    {mockJobs.map((job) => (
-                      <JobCard key={job.id} job={job} />
-                    ))}
-                  </CardContent>
-                </Card>
-              )}
-            </>
-          ) : (
-            <>
-              {activeTab === 'overview' && (
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                  <Card className="card-dark border-gray-700">
-                    <CardHeader>
-                      <CardTitle className="text-gradient">Node Performance</CardTitle>
-                      <CardDescription>Real-time monitoring</CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-6">
-                      <div className="space-y-4">
-                        <div className="flex justify-between items-center">
-                          <span className="text-gray-300">Uptime</span>
-                          <span className="text-white font-semibold">99.8%</span>
-                        </div>
-                        <div className="w-full bg-gray-700 rounded-full h-2">
-                          <div className="bg-green-500 h-2 rounded-full" style={{ width: '99.8%' }}></div>
-                        </div>
-                      </div>
-                      <div className="space-y-4">
-                        <div className="flex justify-between items-center">
-                          <span className="text-gray-300">Utilization</span>
-                          <span className="text-white font-semibold">87%</span>
-                        </div>
-                        <div className="w-full bg-gray-700 rounded-full h-2">
-                          <div className="bg-bnb-yellow h-2 rounded-full" style={{ width: '87%' }}></div>
-                        </div>
-                      </div>
-                      <div className="space-y-4">
-                        <div className="flex justify-between items-center">
-                          <span className="text-gray-300">Client Satisfaction</span>
-                          <span className="text-white font-semibold">4.9/5</span>
-                        </div>
-                        <div className="w-full bg-gray-700 rounded-full h-2">
-                          <div className="bg-bnb-yellow h-2 rounded-full" style={{ width: '98%' }}></div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  <Card className="card-dark border-gray-700">
-                    <CardHeader>
-                      <CardTitle className="text-gradient">Earnings Chart</CardTitle>
-                      <CardDescription>Last 30 days</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="h-32 flex items-end justify-between space-x-2">
-                        {Array.from({ length: 7 }).map((_, i) => (
-                          <div
-                            key={i}
-                            className="bg-bnb-yellow rounded-t opacity-70 hover:opacity-100 transition-opacity"
-                            style={{ 
-                              height: `${Math.random() * 80 + 20}%`, 
-                              width: '100%'
-                            }}
-                          />
-                        ))}
-                      </div>
-                      <div className="flex justify-between text-xs text-gray-400 mt-2">
-                        <span>Mon</span>
-                        <span>Tue</span>
-                        <span>Wed</span>
-                        <span>Thu</span>
-                        <span>Fri</span>
-                        <span>Sat</span>
-                        <span>Sun</span>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
-              )}
-
-              {activeTab === 'nodes' && (
-                <Card className="card-dark border-gray-700">
-                  <CardHeader>
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <CardTitle className="text-gradient">My GPU Nodes</CardTitle>
-                        <CardDescription>Manage your registered GPU nodes</CardDescription>
-                      </div>
-                      <Button className="bnb-gradient text-black font-semibold hover:opacity-90">
-                        <Plus className="w-4 h-4 mr-2" />
-                        Add Node
-                      </Button>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {mockGpuNodes.map((node) => (
-                      <GpuCard key={node.id} node={node} />
-                    ))}
-                  </CardContent>
-                </Card>
-              )}
-
-              {activeTab === 'earnings' && (
-                <Card className="card-dark border-gray-700">
-                  <CardHeader>
-                    <CardTitle className="text-gradient">Earnings Overview</CardTitle>
-                    <CardDescription>Detailed breakdown of your earnings</CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                      <div className="bg-gray-900 p-4 rounded-lg border border-gray-700">
-                        <div className="text-sm text-gray-400 mb-1">Today</div>
-                        <div className="text-xl font-bold text-white">$45.20</div>
-                        <div className="text-xs text-green-400">+8.5%</div>
-                      </div>
-                      <div className="bg-gray-900 p-4 rounded-lg border border-gray-700">
-                        <div className="text-sm text-gray-400 mb-1">This Week</div>
-                        <div className="text-xl font-bold text-white">$287.15</div>
-                        <div className="text-xs text-green-400">+12.3%</div>
-                      </div>
-                      <div className="bg-gray-900 p-4 rounded-lg border border-gray-700">
-                        <div className="text-sm text-gray-400 mb-1">This Month</div>
-                        <div className="text-xl font-bold text-white">$1,247.50</div>
-                        <div className="text-xs text-green-400">+15.7%</div>
-                      </div>
-                    </div>
-                    
-                    <div className="space-y-4">
-                      <h3 className="text-lg font-semibold text-white">Payment History</h3>
-                      <div className="space-y-3">
-                        {[
-                          { date: '2024-01-15', amount: 45.20, status: 'Completed' },
-                          { date: '2024-01-14', amount: 38.75, status: 'Completed' },
-                          { date: '2024-01-13', amount: 52.30, status: 'Completed' },
-                          { date: '2024-01-12', amount: 41.85, status: 'Pending' }
-                        ].map((payment, index) => (
-                          <div key={index} className="flex items-center justify-between p-3 bg-gray-900 rounded-lg border border-gray-700">
-                            <div>
-                              <div className="font-medium text-white">${payment.amount}</div>
-                              <div className="text-sm text-gray-400">{payment.date}</div>
-                            </div>
-                            <div className={`px-2 py-1 rounded text-xs ${
-                              payment.status === 'Completed' 
-                                ? 'bg-green-900 text-green-300' 
-                                : 'bg-yellow-900 text-yellow-300'
-                            }`}>
-                              {payment.status}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              )}
-            </>
-          )}
+            
+            <Button
+              asChild
+              className="bg-academy-yellow text-academy-black hover:bg-yellow-500 font-semibold h-auto p-6 rounded-none flex-col"
+            >
+              <a href="/marketplace" className="flex flex-col items-center gap-2">
+                <Server className="w-8 h-8" />
+                <span>Browse GPUs</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </Button>
+            
+            <Button
+              asChild
+              variant="outline"
+              className="border-academy-black text-academy-black hover:bg-academy-black hover:text-white font-semibold h-auto p-6 rounded-none flex-col"
+            >
+              <a href="/provider" className="flex flex-col items-center gap-2">
+                <Zap className="w-8 h-8" />
+                <span>Add GPU</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </Button>
+            
+            <Button
+              asChild
+              variant="outline"
+              className="border-academy-black text-academy-black hover:bg-academy-black hover:text-white font-semibold h-auto p-6 rounded-none flex-col"
+            >
+              <a href="/settings" className="flex flex-col items-center gap-2">
+                <Settings className="w-8 h-8" />
+                <span>Settings</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </Button>
+          </div>
         </motion.div>
       </div>
     </div>

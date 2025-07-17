@@ -2,253 +2,257 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, Cpu, Zap, Shield, TrendingUp, Users, Clock, DollarSign } from "lucide-react";
-
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
-const stats = [
-  { label: "GPUs Online", value: "1,247", icon: Cpu },
-  { label: "Jobs Completed", value: "23,891", icon: TrendingUp },
-  { label: "Active Users", value: "5,649", icon: Users },
-  { label: "Avg Cost/Hour", value: "$0.89", icon: DollarSign },
-];
-
-const features = [
-  {
-    icon: Zap,
-    title: "Lightning Fast",
-    description: "Deploy your workloads instantly on the fastest GPUs available worldwide.",
-  },
-  {
-    icon: Shield,
-    title: "Secure & Decentralized",
-    description: "Built on BNB Chain with smart contracts ensuring transparent and secure transactions.",
-  },
-  {
-    icon: Clock,
-    title: "24/7 Availability",
-    description: "Global network of GPU providers ensures your jobs run around the clock.",
-  },
-  {
-    icon: DollarSign,
-    title: "Cost Effective",
-    description: "Pay only for what you use with competitive pricing from our provider network.",
-  },
-];
 
 export default function HomePage() {
+  const stats = [
+    { number: "2,847", label: "GPUs Online" },
+    { number: "15,234", label: "Jobs Completed" },
+    { number: "98.7%", label: "Uptime" },
+    { number: "$2.4M", label: "Total Processed" },
+  ];
+
+  const features = [
+    {
+      title: "GPU Marketplace",
+      description: "Access thousands of high-performance GPUs from providers worldwide",
+      color: "yellow",
+      link: "/marketplace"
+    },
+    {
+      title: "Provider Portal", 
+      description: "Share your GPU resources and earn passive income",
+      color: "red",
+      link: "/provider"
+    },
+    {
+      title: "Low Cost Computing",
+      description: "Up to 80% cheaper than traditional cloud providers",
+      color: "white",
+      link: "/rent"
+    }
+  ];
+
+  const companies = [
+    "OPENAI", "NVIDIA", "GOOGLE", "META", "ANTHROPIC", "MICROSOFT", "AMAZON", "APPLE"
+  ];
+
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative py-20 px-4 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-bnb-yellow/10 via-transparent to-bnb-gold/10" />
-        <div className="container mx-auto text-center relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-4xl mx-auto"
-          >
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-              <span className="text-white">Rent or Share</span>
-              <br />
-              <span className="text-gradient">GPUs on the</span>
-              <br />
-              <span className="text-gradient">Decentralized Cloud</span>
-            </h1>
-            
-            <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto">
-              Access powerful GPU computing or monetize your hardware on the world's 
-              first fully decentralized GPU marketplace.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-              <Link href="/marketplace">
-                <Button size="lg" className="bnb-gradient text-black font-semibold text-lg px-8 py-6 group">
-                  Start Renting GPUs
-                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </Link>
-              
-              <Link href="/provider">
-                <Button 
-                  size="lg" 
-                  variant="outline" 
-                  className="border-bnb-yellow text-bnb-yellow hover:bg-bnb-yellow/10 text-lg px-8 py-6"
-                >
-                  Become a Provider
-                </Button>
-              </Link>
-            </div>
-
-            {/* Animated GPU */}
-            <motion.div
-              animate={{ 
-                rotateY: [0, 360],
-                scale: [1, 1.05, 1]
-              }}
-              transition={{ 
-                rotateY: { duration: 8, repeat: Infinity, ease: "linear" },
-                scale: { duration: 4, repeat: Infinity, ease: "easeInOut" }
-              }}
-              className="mx-auto w-32 h-32 relative"
+      <section className="relative bg-academy-yellow py-24 lg:py-32 overflow-hidden">
+        {/* Background Text */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="academy-background-text">GPU</span>
+        </div>
+        
+        <div className="relative container mx-auto px-6 lg:px-8">
+          <div className="max-w-4xl">
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="academy-hero-text mb-8"
             >
-              <div className="absolute inset-0 bg-bnb-yellow/20 blur-xl rounded-full" />
-              <Cpu className="w-32 h-32 text-bnb-yellow" />
+              DECENTRALIZED COMPUTE.<br />
+              FOR CREATORS & INNOVATORS.<br />
+              <span className="text-academy-black/60">ON DEMAND.</span>
+            </motion.h1>
+            
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="text-xl lg:text-2xl text-academy-black/80 mb-12 max-w-2xl leading-relaxed"
+            >
+              Access distributed GPU power for AI training, 3D rendering, and compute-intensive workloads. 
+              Professional-grade infrastructure at a fraction of the cost.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className="flex flex-col sm:flex-row gap-6"
+            >
+              <Link href="/marketplace" className="academy-button-arrow text-academy-black text-lg font-semibold">
+                Start Renting
+              </Link>
+              <Link href="/provider" className="academy-button-arrow text-academy-black/70 text-lg font-medium">
+                Become a Provider
+              </Link>
             </motion.div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 px-4 bg-black/20">
-        <div className="container mx-auto">
+      <section className="py-20 lg:py-24 bg-white">
+        <div className="container mx-auto px-6 lg:px-8">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-6"
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12"
           >
-            {stats.map((stat, index) => {
-              const Icon = stat.icon;
-              return (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="text-center"
-                >
-                  <Card className="card-dark hover:gpu-glow transition-all duration-300 group">
-                    <CardContent className="p-6">
-                      <Icon className="h-8 w-8 text-bnb-yellow mx-auto mb-4 group-hover:scale-110 transition-transform" />
-                      <div className="text-3xl font-bold text-white mb-2">
-                        {stat.value}
-                      </div>
-                      <div className="text-sm text-gray-400">
-                        {stat.label}
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              );
-            })}
+            {stats.map((stat, index) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="text-center"
+              >
+                <div className="academy-stats-number">{stat.number}</div>
+                <div className="academy-stats-label">{stat.label}</div>
+              </motion.div>
+            ))}
           </motion.div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="py-20 px-4">
-        <div className="container mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
+      <section className="py-20 lg:py-24 bg-academy-gray-light">
+        <div className="container mx-auto px-6 lg:px-8">
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="academy-section-heading mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              Why Choose <span className="text-gradient">Lambda</span>?
-            </h2>
-            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              Experience the future of distributed computing with our cutting-edge platform
-            </p>
-          </motion.div>
+            PLATFORM FEATURES
+          </motion.h2>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature, index) => {
-              const Icon = feature.icon;
-              return (
-                <motion.div
-                  key={feature.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-6">
+            {features.map((feature, index) => (
+              <motion.div
+                key={feature.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+                viewport={{ once: true }}
+                className={`academy-overlay-card ${feature.color} relative group cursor-pointer transform transition-transform duration-300 hover:-translate-y-2`}
+                style={{
+                  marginTop: index === 1 ? '3rem' : '0',
+                  marginBottom: index === 1 ? '0' : '3rem'
+                }}
+              >
+                <h3 className="text-2xl lg:text-3xl font-bold mb-4 uppercase tracking-tight">
+                  {feature.title}
+                </h3>
+                <p className="text-lg mb-6 leading-relaxed">
+                  {feature.description}
+                </p>
+                <Link 
+                  href={feature.link}
+                  className={`academy-button-arrow ${
+                    feature.color === 'yellow' ? 'text-academy-black' : 
+                    feature.color === 'red' ? 'text-white' : 'text-academy-black'
+                  } font-semibold group-hover:translate-x-1 transition-transform duration-300`}
                 >
-                  <Card className="card-dark hover:gpu-glow transition-all duration-300 h-full group">
-                    <CardHeader>
-                      <Icon className="h-12 w-12 text-bnb-yellow mb-4 group-hover:scale-110 transition-transform" />
-                      <CardTitle className="text-xl text-white group-hover:text-bnb-yellow transition-colors">
-                        {feature.title}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-gray-300">
-                        {feature.description}
-                      </p>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              );
-            })}
+                  Learn More
+                </Link>
+              </motion.div>
+            ))}
           </div>
+        </div>
+      </section>
+
+      {/* Trusted By Section */}
+      <section className="py-20 lg:py-24 bg-white">
+        <div className="container mx-auto px-6 lg:px-8">
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="academy-section-heading mb-16 text-center"
+          >
+            POWERING PROJECTS FROM<br />COMPANIES LIKE
+          </motion.h2>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12"
+          >
+            {companies.map((company, index) => (
+              <motion.div
+                key={company}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="text-center"
+              >
+                <span className="text-xl lg:text-2xl font-bold text-gray-400 tracking-wider">
+                  {company}
+                </span>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4 bg-gradient-to-r from-bnb-yellow/10 via-transparent to-bnb-gold/10">
-        <div className="container mx-auto text-center">
+      <section className="py-20 lg:py-24 bg-academy-black text-white">
+        <div className="container mx-auto px-6 lg:px-8 text-center">
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-4xl lg:text-6xl font-bold mb-8 uppercase tracking-tight"
+          >
+            Ready to Start?
+          </motion.h2>
+          
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="text-xl lg:text-2xl text-gray-300 mb-12 max-w-2xl mx-auto"
+          >
+            Join thousands of creators and innovators using Lambda for their compute needs.
+          </motion.p>
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="max-w-3xl mx-auto"
+            transition={{ duration: 0.6, delay: 0.4 }}
+            viewport={{ once: true }}
+            className="flex flex-col sm:flex-row gap-6 justify-center"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              Ready to Get Started?
-            </h2>
-            <p className="text-xl text-gray-300 mb-8">
-              Join thousands of developers and providers already using Lambda for their GPU computing needs.
-            </p>
+            <Button
+              asChild
+              className="bg-academy-yellow text-academy-black hover:bg-yellow-500 font-semibold px-8 py-4 text-lg rounded-none"
+            >
+              <Link href="/marketplace" className="flex items-center gap-2">
+                Browse GPUs
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+            </Button>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/rent">
-                <Button size="lg" className="bnb-gradient text-black font-semibold text-lg px-8 py-6">
-                  Submit Your First Job
-                </Button>
+            <Button
+              asChild
+              variant="outline"
+              className="border-white text-white hover:bg-white hover:text-academy-black font-semibold px-8 py-4 text-lg rounded-none"
+            >
+              <Link href="/provider" className="flex items-center gap-2">
+                Share Your GPU
+                <ArrowUpRight className="w-5 h-5" />
               </Link>
-              
-              <Link href="/dashboard">
-                <Button 
-                  size="lg" 
-                  variant="outline" 
-                  className="border-bnb-yellow text-bnb-yellow hover:bg-bnb-yellow/10 text-lg px-8 py-6"
-                >
-                  View Dashboard
-                </Button>
-              </Link>
-            </div>
+            </Button>
           </motion.div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="border-t border-bnb-yellow/20 py-12 px-4 bg-black/40">
-        <div className="container mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="flex items-center space-x-2 mb-4 md:mb-0">
-              <Zap className="h-6 w-6 text-bnb-yellow" />
-              <span className="text-xl font-bold text-gradient">Lambda</span>
-            </div>
-            
-            <div className="flex space-x-6 text-gray-400">
-              <Link href="/docs" className="hover:text-bnb-yellow transition-colors">
-                Documentation
-              </Link>
-              <Link href="/support" className="hover:text-bnb-yellow transition-colors">
-                Support
-              </Link>
-              <Link href="/about" className="hover:text-bnb-yellow transition-colors">
-                About
-              </Link>
-            </div>
-          </div>
-          
-          <div className="mt-8 pt-8 border-t border-bnb-yellow/10 text-center text-gray-400">
-            <p>&copy; 2025 Lambda. Built on BNB Chain. Empowering the decentralized future.</p>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }

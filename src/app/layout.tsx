@@ -1,29 +1,29 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Plus_Jakarta_Sans, Manrope } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/shared/navbar";
 import { Toaster } from "@/components/ui/sonner";
 
-const inter = Inter({
-  variable: "--font-inter",
+const plusJakartaSans = Plus_Jakarta_Sans({
+  variable: "--font-plus-jakarta",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800", "900"],
+  weight: ["300", "400", "500", "600", "700", "800"],
 });
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
+const manrope = Manrope({
+  variable: "--font-manrope",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["300", "400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
   title: "Lambda - Decentralized GPU Renting Platform",
-  description: "Rent or share GPU compute power on the decentralized cloud. Built on BNB Chain for the future of distributed computing.",
-  keywords: ["GPU", "decentralized", "cloud computing", "BNB Chain", "crypto", "blockchain"],
+  description: "Professional decentralized compute marketplace for creators and innovators. Rent or share GPU power on demand.",
+  keywords: ["GPU", "decentralized", "cloud computing", "creators", "innovators", "compute"],
   authors: [{ name: "Lambda Team" }],
   openGraph: {
     title: "Lambda - Decentralized GPU Renting Platform",
-    description: "Rent or share GPU compute power on the decentralized cloud",
+    description: "Professional decentralized compute marketplace for creators and innovators",
     type: "website",
   },
 };
@@ -34,22 +34,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="">
       <body
-        className={`${inter.variable} ${spaceGrotesk.variable} antialiased min-h-screen bg-gradient-to-br from-black via-gray-900 to-black`}
+        className={`${plusJakartaSans.variable} ${manrope.variable} antialiased min-h-screen bg-white`}
       >
         <Navbar />
         <main className="relative">
           {children}
         </main>
         <Toaster 
-          theme="dark" 
+          theme="light" 
           position="bottom-right"
           toastOptions={{
             style: {
-              background: 'rgba(11, 11, 11, 0.8)',
-              border: '1px solid rgba(240, 185, 11, 0.2)',
-              color: '#F0B90B',
+              background: '#FFFFFF',
+              border: '1px solid #e0e0e0',
+              color: '#1A1A1A',
             },
           }}
         />
