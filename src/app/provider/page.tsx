@@ -174,15 +174,15 @@ export default function ProviderPage() {
                   </p>
                   
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                    <Button className="bg-academy-black text-white hover:bg-gray-800 font-semibold py-4 rounded-none">
+                    <Button variant="black">
                       <Download className="w-5 h-5 mr-2" />
                       Windows
                     </Button>
-                    <Button className="bg-academy-black text-white hover:bg-gray-800 font-semibold py-4 rounded-none">
+                    <Button variant="black">
                       <Download className="w-5 h-5 mr-2" />
                       macOS
                     </Button>
-                    <Button className="bg-academy-black text-white hover:bg-gray-800 font-semibold py-4 rounded-none">
+                    <Button variant="black">
                       <Download className="w-5 h-5 mr-2" />
                       Linux
                     </Button>
@@ -214,7 +214,7 @@ export default function ProviderPage() {
                   </p>
 
                   <div className="space-y-6">
-                    <Button className="w-full bg-academy-yellow text-academy-black hover:bg-yellow-500 font-semibold py-4 text-lg rounded-none">
+                    <Button variant="default" size="lg" className="w-full">
                       Connect MetaMask Wallet
                       <ArrowRight className="w-5 h-5 ml-2" />
                     </Button>
@@ -223,7 +223,7 @@ export default function ProviderPage() {
                       <span className="text-gray-500">or</span>
                     </div>
                     
-                    <Button variant="outline" className="w-full border-academy-black text-academy-black hover:bg-academy-black hover:text-white font-semibold py-4 text-lg rounded-none">
+                    <Button variant="outline" size="lg" className="w-full">
                       Connect WalletConnect
                       <ArrowRight className="w-5 h-5 ml-2" />
                     </Button>
@@ -290,7 +290,7 @@ export default function ProviderPage() {
                     </div>
                   </div>
 
-                  <Button className="mt-6 bg-academy-yellow text-academy-black hover:bg-yellow-500 font-semibold px-8 py-3 rounded-none">
+                  <Button variant="default" className="mt-6 px-8">
                     <Zap className="w-5 h-5 mr-2" />
                     Auto-Detect Hardware
                   </Button>
@@ -351,7 +351,7 @@ export default function ProviderPage() {
                       </div>
                     </div>
 
-                    <div className="bg-academy-yellow p-6">
+                    <div className="academy-stats-card yellow academy-interactive">
                       <h4 className="font-bold text-academy-black mb-4 uppercase text-sm tracking-wider">
                         Estimated Earnings
                       </h4>
@@ -383,7 +383,7 @@ export default function ProviderPage() {
                   onClick={() => setCurrentStep(Math.max(1, currentStep - 1))}
                   disabled={currentStep === 1}
                   variant="outline"
-                  className="border-academy-black text-academy-black hover:bg-academy-black hover:text-white rounded-none disabled:opacity-50"
+                  className="disabled:opacity-50"
                 >
                   Previous
                 </Button>
@@ -391,13 +391,13 @@ export default function ProviderPage() {
                 {currentStep < steps.length ? (
                   <Button
                     onClick={() => setCurrentStep(Math.min(steps.length, currentStep + 1))}
-                    className="bg-academy-yellow text-academy-black hover:bg-yellow-500 font-semibold rounded-none"
+                    variant="default"
                   >
                     Next Step
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
                 ) : (
-                  <Button className="bg-academy-red text-white hover:bg-red-600 font-semibold rounded-none">
+                  <Button variant="destructive">
                     Start Providing
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
@@ -424,7 +424,8 @@ export default function ProviderPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
               asChild
-              className="bg-academy-black text-white hover:bg-gray-800 font-semibold px-8 py-3 rounded-none"
+              variant="black"
+              className="px-8"
             >
               <a href="/discord" className="flex items-center gap-2">
                 Join Discord
@@ -434,7 +435,6 @@ export default function ProviderPage() {
             <Button
               asChild
               variant="outline"
-              className="border-academy-black text-academy-black hover:bg-academy-black hover:text-white rounded-none"
             >
               <a href="/support" className="flex items-center gap-2">
                 Contact Support

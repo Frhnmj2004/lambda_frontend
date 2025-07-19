@@ -163,7 +163,7 @@ export default function DashboardPage() {
                   onCheckedChange={setIsProviding}
                 />
               </div>
-              <Button className="bg-academy-yellow text-academy-black hover:bg-yellow-500 font-semibold rounded-none">
+              <Button variant="default">
                 <Plus className="w-4 h-4 mr-2" />
                 New Job
               </Button>
@@ -202,7 +202,7 @@ export default function DashboardPage() {
           >
             {/* Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div className="bg-academy-yellow p-6 border border-gray-200">
+              <div className="academy-stats-card yellow">
                 <div className="flex items-center justify-between mb-4">
                   <DollarSign className="w-8 h-8 text-academy-black" />
                   <span className="text-2xl font-bold text-academy-black">
@@ -214,7 +214,7 @@ export default function DashboardPage() {
                 </h3>
               </div>
 
-              <div className="bg-white p-6 border border-gray-200">
+              <div className="academy-stats-card academy-interactive">
                 <div className="flex items-center justify-between mb-4">
                   <Activity className="w-8 h-8 text-gray-600" />
                   <span className="text-2xl font-bold text-academy-black">
@@ -226,7 +226,7 @@ export default function DashboardPage() {
                 </h3>
               </div>
 
-              <div className="bg-white p-6 border border-gray-200">
+              <div className="academy-stats-card academy-interactive">
                 <div className="flex items-center justify-between mb-4">
                   <BarChart3 className="w-8 h-8 text-gray-600" />
                   <span className="text-2xl font-bold text-academy-black">
@@ -238,7 +238,7 @@ export default function DashboardPage() {
                 </h3>
               </div>
 
-              <div className="bg-white p-6 border border-gray-200">
+              <div className="academy-stats-card academy-interactive">
                 <div className="flex items-center justify-between mb-4">
                   <Server className="w-8 h-8 text-gray-600" />
                   <span className="text-2xl font-bold text-academy-black">
@@ -250,7 +250,7 @@ export default function DashboardPage() {
                 </h3>
               </div>
 
-              <div className="bg-white p-6 border border-gray-200">
+              <div className="academy-stats-card academy-interactive">
                 <div className="flex items-center justify-between mb-4">
                   <Cpu className="w-8 h-8 text-gray-600" />
                   <span className="text-2xl font-bold text-academy-black">
@@ -262,7 +262,7 @@ export default function DashboardPage() {
                 </h3>
               </div>
 
-              <div className="bg-white p-6 border border-gray-200">
+              <div className="academy-stats-card academy-interactive">
                 <div className="flex items-center justify-between mb-4">
                   <TrendingUp className="w-8 h-8 text-gray-600" />
                   <span className="text-2xl font-bold text-academy-black">
@@ -324,7 +324,7 @@ export default function DashboardPage() {
               <h2 className="text-2xl font-bold text-academy-black uppercase tracking-tight">
                 Your Jobs
               </h2>
-              <Button className="bg-academy-yellow text-academy-black hover:bg-yellow-500 font-semibold rounded-none">
+              <Button variant="default">
                 <Plus className="w-4 h-4 mr-2" />
                 Submit New Job
               </Button>
@@ -362,7 +362,7 @@ export default function DashboardPage() {
                   </div>
                   <div className="text-gray-600">{job.gpu}</div>
                   <div className="flex gap-2">
-                    <Button variant="outline" size="sm" className="border-academy-black text-academy-black hover:bg-academy-black hover:text-white rounded-none">
+                    <Button variant="outline" size="sm">
                       View
                     </Button>
                     {job.status === 'running' && (
@@ -389,7 +389,7 @@ export default function DashboardPage() {
               <h2 className="text-2xl font-bold text-academy-black uppercase tracking-tight">
                 Your GPU Nodes
               </h2>
-              <Button className="bg-academy-yellow text-academy-black hover:bg-yellow-500 font-semibold rounded-none">
+              <Button variant="default">
                 <Plus className="w-4 h-4 mr-2" />
                 Add GPU Node
               </Button>
@@ -429,7 +429,7 @@ export default function DashboardPage() {
                   </div>
                   <div className="text-gray-600">{node.uptime}</div>
                   <div className="flex gap-2">
-                    <Button variant="outline" size="sm" className="border-academy-black text-academy-black hover:bg-academy-black hover:text-white rounded-none">
+                    <Button variant="outline" size="sm">
                       Configure
                     </Button>
                     <Button variant="outline" size="sm" className="border-red-600 text-red-600 hover:bg-red-600 hover:text-white rounded-none">
@@ -442,7 +442,7 @@ export default function DashboardPage() {
 
             {/* Provider Stats */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-academy-yellow p-6 border border-gray-200">
+              <div className="academy-stats-card yellow">
                 <div className="flex items-center justify-between mb-4">
                   <Wallet className="w-8 h-8 text-academy-black" />
                   <span className="text-2xl font-bold text-academy-black">
@@ -454,7 +454,7 @@ export default function DashboardPage() {
                 </h3>
               </div>
 
-              <div className="bg-white p-6 border border-gray-200">
+              <div className="academy-stats-card academy-interactive">
                 <div className="flex items-center justify-between mb-4">
                   <Clock className="w-8 h-8 text-gray-600" />
                   <span className="text-2xl font-bold text-academy-black">
@@ -466,7 +466,7 @@ export default function DashboardPage() {
                 </h3>
               </div>
 
-              <div className="bg-white p-6 border border-gray-200">
+              <div className="academy-stats-card academy-interactive">
                 <div className="flex items-center justify-between mb-4">
                   <Users className="w-8 h-8 text-gray-600" />
                   <span className="text-2xl font-bold text-academy-black">
@@ -495,7 +495,8 @@ export default function DashboardPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <Button
               asChild
-              className="bg-academy-black text-white hover:bg-gray-800 font-semibold h-auto p-6 rounded-none flex-col"
+              variant="black"
+              className="h-auto p-6 flex-col"
             >
               <a href="/rent" className="flex flex-col items-center gap-2">
                 <Plus className="w-8 h-8" />
@@ -506,7 +507,8 @@ export default function DashboardPage() {
             
             <Button
               asChild
-              className="bg-academy-yellow text-academy-black hover:bg-yellow-500 font-semibold h-auto p-6 rounded-none flex-col"
+              variant="default"
+              className="h-auto p-6 flex-col"
             >
               <a href="/marketplace" className="flex flex-col items-center gap-2">
                 <Server className="w-8 h-8" />
@@ -518,7 +520,7 @@ export default function DashboardPage() {
             <Button
               asChild
               variant="outline"
-              className="border-academy-black text-academy-black hover:bg-academy-black hover:text-white font-semibold h-auto p-6 rounded-none flex-col"
+              className="h-auto p-6 flex-col"
             >
               <a href="/provider" className="flex flex-col items-center gap-2">
                 <Zap className="w-8 h-8" />
@@ -530,7 +532,7 @@ export default function DashboardPage() {
             <Button
               asChild
               variant="outline"
-              className="border-academy-black text-academy-black hover:bg-academy-black hover:text-white font-semibold h-auto p-6 rounded-none flex-col"
+              className="h-auto p-6 flex-col"
             >
               <a href="/settings" className="flex flex-col items-center gap-2">
                 <Settings className="w-8 h-8" />

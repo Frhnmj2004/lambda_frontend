@@ -104,7 +104,7 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="text-center"
+                className="academy-stats-card academy-interactive text-center"
               >
                 <div className="academy-stats-number">{stat.number}</div>
                 <div className="academy-stats-label">{stat.label}</div>
@@ -127,7 +127,7 @@ export default function HomePage() {
             PLATFORM FEATURES
           </motion.h2>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-6 items-start">
             {features.map((feature, index) => (
               <motion.div
                 key={feature.title}
@@ -135,16 +135,12 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.2 }}
                 viewport={{ once: true }}
-                className={`academy-overlay-card ${feature.color} relative group cursor-pointer transform transition-transform duration-300 hover:-translate-y-2`}
-                style={{
-                  marginTop: index === 1 ? '3rem' : '0',
-                  marginBottom: index === 1 ? '0' : '3rem'
-                }}
+                className={`academy-overlay-card ${feature.color} relative group cursor-pointer h-full flex flex-col`}
               >
                 <h3 className="text-2xl lg:text-3xl font-bold mb-4 uppercase tracking-tight">
                   {feature.title}
                 </h3>
-                <p className="text-lg mb-6 leading-relaxed">
+                <p className="text-lg mb-6 leading-relaxed flex-grow">
                   {feature.description}
                 </p>
                 <Link 
@@ -152,7 +148,7 @@ export default function HomePage() {
                   className={`academy-button-arrow ${
                     feature.color === 'yellow' ? 'text-academy-black' : 
                     feature.color === 'red' ? 'text-white' : 'text-academy-black'
-                  } font-semibold group-hover:translate-x-1 transition-transform duration-300`}
+                  } font-semibold group-hover:translate-x-1 transition-transform duration-300 mt-auto`}
                 >
                   Learn More
                 </Link>
@@ -232,7 +228,8 @@ export default function HomePage() {
           >
             <Button
               asChild
-              className="bg-academy-yellow text-academy-black hover:bg-yellow-500 font-semibold px-8 py-4 text-lg rounded-none"
+              variant="default"
+              size="lg"
             >
               <Link href="/marketplace" className="flex items-center gap-2">
                 Browse GPUs
@@ -243,7 +240,8 @@ export default function HomePage() {
             <Button
               asChild
               variant="outline"
-              className="border-white text-white hover:bg-white hover:text-academy-black font-semibold px-8 py-4 text-lg rounded-none"
+              size="lg"
+              className="border-white text-white hover:bg-white hover:text-academy-black"
             >
               <Link href="/provider" className="flex items-center gap-2">
                 Share Your GPU
