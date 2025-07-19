@@ -5,7 +5,7 @@
 > **Rent or Share GPUs on the Decentralized Cloud**
 
 Lambda is a cutting-edge, fully decentralized GPU renting platform built on BNB Chain. Access powerful GPU computing or monetize your hardware on the world's first crypto-native GPU marketplace.
-
+..
 ## ✨ Features
 
 ### 🚀 For GPU Renters
