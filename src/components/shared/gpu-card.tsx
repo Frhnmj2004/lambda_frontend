@@ -71,7 +71,8 @@ export function GpuCard({ node, onRent, className, variant = 'card' }: GpuCardPr
             <Button
               onClick={() => onRent?.(node.id)}
               disabled={!isAvailable}
-              className="bg-academy-yellow text-academy-black hover:bg-yellow-500 font-semibold px-6 rounded-none disabled:opacity-50"
+              variant="default"
+              className="px-6"
             >
               {isAvailable ? 'Rent Now' : 'Unavailable'}
               <ArrowRight className="w-4 h-4 ml-2" />
@@ -91,7 +92,7 @@ export function GpuCard({ node, onRent, className, variant = 'card' }: GpuCardPr
       transition={{ duration: 0.2 }}
       className={cn("w-full", className)}
     >
-      <div className="bg-white border border-gray-200 p-6 hover:border-academy-yellow transition-colors">
+      <div className="academy-overlay-card white">
         {/* Header */}
         <div className="flex items-start justify-between mb-6">
           <div className="flex items-center space-x-3">
@@ -183,7 +184,8 @@ export function GpuCard({ node, onRent, className, variant = 'card' }: GpuCardPr
           <Button
             onClick={() => onRent?.(node.id)}
             disabled={!isAvailable}
-            className="w-full bg-academy-yellow text-academy-black hover:bg-yellow-500 font-semibold py-3 rounded-none disabled:opacity-50 disabled:cursor-not-allowed"
+            variant="default"
+            className="w-full"
           >
             {isAvailable ? 'Rent This GPU' : 'Currently Unavailable'}
             <ArrowRight className="w-4 h-4 ml-2" />

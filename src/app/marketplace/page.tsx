@@ -244,7 +244,7 @@ export default function MarketplacePage() {
                   {gpu.available ? (
                     <Button
                       asChild
-                      className="bg-academy-yellow text-academy-black hover:bg-yellow-500 font-semibold px-6 py-2 rounded-none"
+                      variant="default"
                     >
                       <a href={`/rent?gpu=${gpu.id}`} className="flex items-center gap-2">
                         Rent Now
@@ -286,7 +286,6 @@ export default function MarketplacePage() {
                 setSelectedModel("all");
               }}
               variant="outline"
-              className="border-academy-black text-academy-black hover:bg-academy-black hover:text-white rounded-none"
             >
               Clear Filters
             </Button>
@@ -309,7 +308,8 @@ export default function MarketplacePage() {
           </p>
           <Button
             asChild
-            className="bg-academy-red text-white hover:bg-red-600 font-semibold px-8 py-4 text-lg rounded-none"
+            variant="destructive"
+            size="lg"
           >
             <a href="mailto:hello@lambda.com" className="flex items-center gap-2">
               Contact Sales

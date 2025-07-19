@@ -89,7 +89,8 @@ export function Navbar() {
             ) : (
               <Button
                 onClick={connectWallet}
-                className="hidden md:flex items-center gap-2 bg-academy-yellow text-academy-black hover:bg-yellow-500 font-semibold px-6 py-2 rounded-none"
+                variant="default"
+                className="hidden md:flex items-center gap-2"
               >
                 Connect Wallet
                 <ArrowRight className="w-4 h-4" />
@@ -157,7 +158,8 @@ export function Navbar() {
               ) : (
                 <Button
                   onClick={connectWallet}
-                  className="w-full bg-academy-yellow text-academy-black hover:bg-yellow-500 font-semibold py-3 rounded-none mt-4"
+                  variant="default"
+                  className="w-full mt-4"
                 >
                   Connect Wallet
                 </Button>

@@ -122,7 +122,7 @@ export default function RentPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="bg-academy-gray-light p-8 border border-gray-200"
+            className="academy-box bg-academy-gray-light p-8 border border-gray-200"
           >
             <h2 className="text-2xl font-bold text-academy-black mb-8 uppercase tracking-tight">
               Job Information
@@ -175,7 +175,7 @@ export default function RentPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="bg-white p-8 border border-gray-200"
+            className="academy-box bg-white p-8 border border-gray-200"
           >
             <h2 className="text-2xl font-bold text-academy-black mb-8 uppercase tracking-tight">
               Input Data
@@ -299,7 +299,7 @@ export default function RentPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="bg-white p-8 border border-gray-200"
+            className="academy-box bg-white p-8 border border-gray-200"
           >
             <h2 className="text-2xl font-bold text-academy-black mb-8 uppercase tracking-tight">
               Budget & Pricing
@@ -324,7 +324,7 @@ export default function RentPage() {
                 </div>
               </div>
 
-              <div className="bg-academy-gray-light p-6 border border-gray-200">
+              <div className="academy-stats-card academy-interactive bg-academy-gray-light">
                 <h3 className="font-bold text-academy-black mb-2 uppercase text-sm tracking-wider">
                   Estimated Cost
                 </h3>
@@ -348,7 +348,9 @@ export default function RentPage() {
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="bg-academy-red text-white hover:bg-red-600 font-semibold px-12 py-4 text-lg rounded-none disabled:opacity-50"
+              variant="destructive"
+              size="lg"
+              className="px-12"
             >
               {isSubmitting ? (
                 "Submitting Job..."
@@ -384,7 +386,6 @@ export default function RentPage() {
             <Button
               asChild
               variant="outline"
-              className="border-academy-black text-academy-black hover:bg-academy-black hover:text-white rounded-none"
             >
               <a href="/docs" className="flex items-center gap-2">
                 View Documentation
@@ -394,7 +395,6 @@ export default function RentPage() {
             <Button
               asChild
               variant="outline"
-              className="border-academy-black text-academy-black hover:bg-academy-black hover:text-white rounded-none"
             >
               <a href="/examples" className="flex items-center gap-2">
                 See Examples
